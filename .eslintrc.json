@@ -6,8 +6,8 @@
     // Only uses Testing Library lint rules in test files
     {
       "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
+        "src/**/__tests__/**/*.[jt]s?(x)",
+        "src/**/?(*.)+(spec|test).[jt]s?(x)"
       ],
       "extends": ["plugin:testing-library/react"]
     }
