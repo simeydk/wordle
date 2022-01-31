@@ -15,9 +15,11 @@ type Guess = {
     result: string
 }
 
+const DICTIONARY = ['learn', 'build', 'stash', 'steal', 'stare', 'stamp', 'stare', 'steal', 'stash']
+
 export default function Wordle() {
 
-    const SOLUTION = "learn";
+    const SOLUTION = "build";
 
     const [draft, setDraft] = useState('')
     const [guesses, setGuesses] = useState<Guess[]>([])
@@ -28,6 +30,8 @@ export default function Wordle() {
     }
 
     const onSubmit = () => {
+        if (draft.length != 5) return
+        if (!DICTIONARY.includes(draft)) return
         addGuess(draft)
         setDraft('')
     }
@@ -92,13 +96,13 @@ function BoardRow({word = '', result = ''}) {
 
 function BoardBlock({char = '', state = wordle.LetterState.empty} : {char: string, state: wordle.LetterState}) {
     const stateClasses = {
-        [wordle.LetterState.empty]: 'bg-white border-2 border-slate-500',
+        [wordle.LetterState.empty]: 'bg-white border-2 border-slate-300',
         [wordle.LetterState.miss]: 'bg-slate-500 text-white',
         [wordle.LetterState.present]: 'bg-amber-500 text-white',
         [wordle.LetterState.exact]: 'bg-lime-600 text-white',
     };
-    const bg = char == ' ' ? 'bg-white border-2 border-slate-300' : stateClasses[state] || 'bg-pink-500 border border-pink-400';
-    return <div className={`${bg} rounded flex items-center justify-center w-full`}>
+    const bg = char == ' ' ? 'bg-white' : stateClasses[state] || 'bg-pink-500 border border-pink-400';
+    return <div className={`${bg} rounded flex items-center justify-center w-full shadow `}>
         <h1 className="text-2xl font-medium">{char.toUpperCase()}</h1>
     </div>;
 }
