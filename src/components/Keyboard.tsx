@@ -57,7 +57,7 @@ export function Keyboard(props) {
 
 }
 
-const BackSpaceKey = ({onClick}): JSX.Element => <button className="bg-red-200 text-red-700 h-12 w-12 grow rounded shadow flex items-center justify-center" name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
-const EnterKey = (): JSX.Element => <button className="bg-emerald-200 text-emerald-700 h-12 w-12 grow rounded shadow flex items-center justify-center" name="enter" type="submit">{<ArrowRightIcon className="h-6 w-6" />}</button>;
+const BackSpaceKey = ({onClick}): JSX.Element => <button className="bg-red-200 text-red-700 h-12 w-12 grow rounded shadow bevel flex items-center justify-center hover:scale-105 active:scale-95" name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
+const EnterKey = (): JSX.Element => <button className="bg-emerald-200 text-emerald-700 h-12 w-12 grow rounded shadow bevel flex items-center justify-center hover:scale-105 active:scale-95" name="enter" type="submit">{<ArrowRightIcon className="h-6 w-6" />}</button>;
 
-const Key = ({char, onClick}: {char:JSX.Element, onClick: (e) }): JSX.Element => <button className="bg-slate-300 h-12 w-8 rounded shadow font-medium" name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>;
+const Key = ({char, onClick}: {char:JSX.Element, onClick: (e) }): JSX.Element => <button className="bg-slate-200 h-12 w-8 rounded shadow bevel font-medium transition duration-100 hover:scale-105 active:scale-95" name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>;
