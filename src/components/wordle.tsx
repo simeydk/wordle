@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import * as wordle from "../lib/wordle";
 import { Keyboard } from "./Keyboard";
+import {solutions, rest} from "@/lib/dictionary.json"
 
 enum GameState {
     NotStarted,
@@ -15,14 +16,16 @@ type Guess = {
     result: string
 }
 
-const DICTIONARY = ['learn', 'build', 'stash', 'steal', 'stare', 'stamp', 'stare', 'steal', 'stash']
+const randomElement = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] 
+const DICTIONARY = solutions.concat(rest)
 
 export default function Wordle() {
 
-    const SOLUTION = "build";
+    const [SOLUTION, _] = useState(randomElement(solutions));
 
     const [draft, setDraft] = useState('')
     const [guesses, setGuesses] = useState<Guess[]>([])
+    const useDebugValue
     const numBlankRows = 6 - guesses.length - 1
     
     const addGuess = (word: string) => {
@@ -36,8 +39,12 @@ export default function Wordle() {
         setDraft('')
     }
 
-    const guessedLetters = {}
-    guesses.forEach(guess => {guess.word.split('').forEach((letter, i) => {guessedLetters[letter] = Math.max(parseInt(guess.result[i]), guessedLetters[letter] === undefined ? -1 : guessedLetters[letter])})})
+    const guessedLetters:{[key:string]: number} = {}
+    guesses.forEach(guess => {guess.word.split('').forEach((letter, i) => {
+        const result = parseInt(guess.result[i])
+        const existing = guessedLetters[letter] || -1
+        guessedLetters[letter] = Math.max(result, existing)
+    })})
 
     let gameState: GameState
     if (guesses.length && guesses[guesses.length - 1].result === '22222') {
@@ -77,7 +84,7 @@ export default function Wordle() {
                 </div>
 
             </div>
-            <Keyboard value={draft} setValue={setDraft} onSubmit={onSubmit} />
+            <Keyboard value={draft} setValue={setDraft} onSubmit={onSubmit} guessedLetters={guessedLetters} />
         </div>
     );
 }
