@@ -10,13 +10,26 @@ enum GameState {
     Lost
 }
 
+type Guess = {
+    word: string;
+    result: string
+}
+
 export default function Wordle() {
 
-    const [draft, setDraft] = useState('water')
-    const [guesses, setGuesses] = useState([{word:'spoon', result:'01200'}, {word: 'pinky', result : '12010'}])
+    const SOLUTION = "learn";
+
+    const [draft, setDraft] = useState('')
+    const [guesses, setGuesses] = useState<Guess[]>([])
     const numBlankRows = 6 - guesses.length - 1
+    
+    const addGuess = (word: string) => {
+        setGuesses(oldGuesses => [...oldGuesses, {word, result: wordle.assess(word, SOLUTION).join('')}])
+    }
+
     const onSubmit = () => {
-        setGuesses(oldGuesses => [...oldGuesses, {word: 'fluff', result: '02012'}])
+        addGuess(draft)
+        setDraft('')
     }
 
     const guessedLetters = {}
@@ -34,7 +47,7 @@ export default function Wordle() {
     } 
 
     return (
-        <div className="bg-slate-100 min-h-screen flex flex-col items-center gap-2 py-2">
+        <div className="bg-slate-100 h-screen flex flex-col items-center gap-4 py-2">
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
@@ -47,23 +60,20 @@ export default function Wordle() {
                     rel="stylesheet"
                 />
             </Head>
-            <h1 style={{fontFamily: 'Bangers'}} className="text-4xl p-4 transform -skew-y-3 bg-gradient-to-tr from-lime-600 to-green-700 text-transparent bg-clip-text">
+            <h1 style={{fontFamily: 'Bangers'}} className="text-3xl p-2 transform -skew-y-3 bg-gradient-to-tr from-lime-600 to-green-700 text-transparent bg-clip-text">
                 Not Wordle
             </h1>
-            <div className="flex flex-col gap-2 grow">
-                {guesses.map(({word, result}, i) => <BoardRow key={i} word={word} result={result} />)}
-                <BoardRow word={draft + "_"} key={guesses.length} />
-                {Array.from({length: numBlankRows}).map((_, i) => <BoardRow key={i + guesses.length + 1} />)}
+            <div className="flex grow w-full max-w-xs">
+                {/* <div className="outline outline-red-500 w-full"></div> */}
+                <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96">
+                    {/* {Array.from({length:20}).map(() => <div className="bg-white rounded shadow"></div>)} */}
+                    {guesses.map(({word, result}, i) => <BoardRow key={i} word={word} result={result} />)}
+                    <BoardRow word={draft + "_"} key={guesses.length} />
+                    {Array.from({length: numBlankRows}).map((_, i) => <BoardRow key={i + guesses.length + 1} />)}
+                </div>
 
             </div>
-            {/* <BoardRow word="" />
-            <BoardRow word="" />
-            <BoardRow word="" />
-            <BoardRow word="" /> */}
-            
-            
-
-            <Keyboard onEnter={onSubmit} onBackSpace={() => setDraft(draft => draft.slice(0,-1))} />
+            <Keyboard value={draft} setValue={setDraft} onSubmit={onSubmit} />
         </div>
     );
 }
@@ -75,20 +85,20 @@ function BoardRow({word = '', result = ''}) {
     word = word.slice(0,5)
     const results = result.split('').map(x => parseInt(x)) as wordle.LetterState[]
     results.push( ...Array.from({length: 5 - results.length}).map(x => wordle.LetterState.empty))
-    return <div className="flex gap-2">
-        {word.split('').map((char, index) => <BoardBlock key={index} char={char} state={results[index]} />)}
-       
-    </div>;
+    return <>
+        {word.split('').map((char, index) => <BoardBlock key={index} char={char} state={results[index]} />)} 
+    </>;
 }
 
 function BoardBlock({char = '', state = wordle.LetterState.empty} : {char: string, state: wordle.LetterState}) {
     const stateClasses = {
-        [wordle.LetterState.empty]: 'bg-white',
+        [wordle.LetterState.empty]: 'bg-white border-2 border-slate-500',
         [wordle.LetterState.miss]: 'bg-slate-500 text-white',
         [wordle.LetterState.present]: 'bg-amber-500 text-white',
         [wordle.LetterState.exact]: 'bg-lime-600 text-white',
     };
-    return <div className={`w-12 h-12 ${stateClasses[state] || 'bg-white'} rounded shadow flex items-center justify-center`}>
+    const bg = char == ' ' ? 'bg-white border-2 border-slate-300' : stateClasses[state] || 'bg-pink-500 border border-pink-400';
+    return <div className={`${bg} rounded flex items-center justify-center w-full`}>
         <h1 className="text-2xl font-medium">{char.toUpperCase()}</h1>
     </div>;
 }
