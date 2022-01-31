@@ -15,7 +15,7 @@ export function assess(word: string, solution: string): LetterState[] {
     for (let i = 0; i < w.length; i++) {
         if (w[i] === sol[i]) {
             result[i] = LetterState.exact
-            sol[i] = null
+            sol[i] = ' '
         }
     }
     
@@ -25,7 +25,7 @@ export function assess(word: string, solution: string): LetterState[] {
         for (let j = 0; j < sol.length; j++) {
             if ((w[i] === sol[j]) && sol[i]) {
                 result[i] = LetterState.present
-                sol[j] = null
+                sol[j] = ' '
                 break
             }
         }

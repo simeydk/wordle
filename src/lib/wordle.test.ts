@@ -23,6 +23,7 @@ const scenarios = [
     ["bobba","xxxbb", "10020"],
     ["bba","xxb", "100"],
     ["bbbaa","xxxbb", "11000"],
+    ["rates","rehab", "21010"]
 ]
 scenarios.forEach(([word, solution, expectedResult]) => {
     test(`assess(${word}, ${solution}) = ${expectedResult}`, () => {

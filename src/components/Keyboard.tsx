@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react"
 import {BackspaceIcon, ArrowRightIcon} from "@heroicons/react/outline"
 import Head from "next/head"
+import * as wordle from "@/lib/wordle"
 
 //  @ts-ignore
 const INTERCEPTEDKEYS = ['backspace, enter', ...'abcdefghijklmnopqrstuvwxyz']
 
-export function Keyboard(props: {value: string, setValue: React.Dispatch<React.SetStateAction<string>>, onSubmit: (word:string) => void}) {
+export function Keyboard(props: {value: string, setValue: React.Dispatch<React.SetStateAction<string>>, onSubmit: (word:string) => void, guessedLetters: {[key:string]: number}}) {
     const {value, setValue} = props
 
     const [isDown, setIsDown] = useState<{[key:string]:boolean}>({})
@@ -62,7 +63,7 @@ export function Keyboard(props: {value: string, setValue: React.Dispatch<React.S
     
     const rowsRaw = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'].map(row => row.split(''));
     
-    const rows = rowsRaw.map(row => row.map((char) => <Key key={char} char={char} onClick={onClick} isDown={isDown[char]} />));
+    const rows = rowsRaw.map(row => row.map((char) => <Key key={char} char={char} onClick={onClick} isDown={isDown[char]} state={props.guessedLetters[char]}/>));
     rows[1] = [<div className="col-span-1" key="space1"></div>, ...rows[1], <div className="col-span-1" key="space2"></div>];
     rows[2] = [<BackSpaceKey key="bs" onClick={() => setValue(x => x.slice(0,-1))} isDown={isDown['backspace']} />, ...rows[2], <EnterKey key="enter" isDown={isDown['enter']} onClick={props.onSubmit} />];
     const font = "IBM Plex Mono"
@@ -83,4 +84,13 @@ export function Keyboard(props: {value: string, setValue: React.Dispatch<React.S
 const BackSpaceKey = ({onClick, isDown}): JSX.Element => <button className={"bg-red-200 text-red-700 h-12 transition duration-100 col-span-3 rounded rounded-b-md flex items-center justify-center p-0.5 hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
 const EnterKey = ({onClick, isDown}): JSX.Element => <button className={"bg-emerald-200 text-emerald-700 h-12 transition duration-100 col-span-3 rounded rounded-b-md flex items-center justify-center p-0.5  hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="enter" type="submit" onClick={onClick}>{<ArrowRightIcon className="h-6 w-6"  />}</button>;
 
-const Key = ({char, onClick, isDown = false}: {char: string, onClick: (e: React.MouseEvent) => {}, isDown: boolean }): JSX.Element => <button className={"bg-slate-300 h-12 col-span-2 rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex " + (isDown ? "scale-75" : "")} name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>;
+function Key({ char, onClick, isDown = false, state = wordle.LetterState.empty }: { char: string; onClick: (e: React.MouseEvent) => {}; isDown: boolean; state?: wordle.LetterState} ): JSX.Element {
+    const stateClasses = {
+        [wordle.LetterState.empty]: 'bg-slate-300',
+        [wordle.LetterState.miss]: 'bg-slate-500 text-white',
+        [wordle.LetterState.present]: 'bg-amber-500 text-white',
+        [wordle.LetterState.exact]: 'bg-lime-600 text-white',
+    };
+    const bg = state !== undefined ? stateClasses[state] || 'bg-slate-300' : 'bg-slate-300';
+    return <button className={bg + " h-12 col-span-2 rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex " + (isDown ? "scale-75" : "")} name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>
+}
