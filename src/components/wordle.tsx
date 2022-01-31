@@ -25,7 +25,6 @@ export default function Wordle() {
 
     const [draft, setDraft] = useState('')
     const [guesses, setGuesses] = useState<Guess[]>([])
-    const useDebugValue
     const numBlankRows = 6 - guesses.length - 1
     
     const addGuess = (word: string) => {
