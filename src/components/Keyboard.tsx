@@ -30,8 +30,8 @@ export function Keyboard(props: {value: string, setValue: React.Dispatch<React.S
 
     const onKeyDown = (e: React.KeyboardEvent) => {
         const key = e.key.toLowerCase()
+        setKey(key, true)
         if (!e.altKey && !e.ctrlKey && !e.shiftKey && INTERCEPTEDKEYS.includes(key)) {
-            setKey(key, true)
             console.log("preventDefault", key)
             e.preventDefault()
         }
@@ -80,7 +80,7 @@ export function Keyboard(props: {value: string, setValue: React.Dispatch<React.S
 
 }
 
-const BackSpaceKey = ({onClick, isDown}): JSX.Element => <button className={"bg-red-200 text-red-700 h-12 col-span-3 grow rounded rounded-b-md shadow bevel flex items-center justify-center p-0.5 hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
-const EnterKey = ({onClick, isDown}): JSX.Element => <button className={"bg-emerald-200 text-emerald-700 h-12 col-span-3 grow rounded rounded-b-md shadow bevel flex items-center justify-center p-0.5  hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="enter" type="submit" onClick={onClick}>{<ArrowRightIcon className="h-6 w-6"  />}</button>;
+const BackSpaceKey = ({onClick, isDown}): JSX.Element => <button className={"bg-red-200 text-red-700 h-12 transition duration-100 col-span-3 rounded rounded-b-md flex items-center justify-center p-0.5 hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
+const EnterKey = ({onClick, isDown}): JSX.Element => <button className={"bg-emerald-200 text-emerald-700 h-12 transition duration-100 col-span-3 rounded rounded-b-md flex items-center justify-center p-0.5  hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="enter" type="submit" onClick={onClick}>{<ArrowRightIcon className="h-6 w-6"  />}</button>;
 
-const Key = ({char, onClick, isDown = false}: {char: string, onClick: (e: React.MouseEvent) => {}, isDown: boolean }): JSX.Element => <button className={"bg-slate-300 h-12 col-span-2 rounded rounded-b-md shadow bevel font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex " + (isDown ? "scale-75" : "")} name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>;
+const Key = ({char, onClick, isDown = false}: {char: string, onClick: (e: React.MouseEvent) => {}, isDown: boolean }): JSX.Element => <button className={"bg-slate-300 h-12 col-span-2 rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex " + (isDown ? "scale-75" : "")} name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>;
