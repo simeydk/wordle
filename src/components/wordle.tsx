@@ -2,7 +2,10 @@ import Head from "next/head";
 import { useState } from "react";
 import * as wordle from "../lib/wordle";
 import { Keyboard } from "./Keyboard";
-import {solutions, rest} from "@/lib/dictionary.json"
+import dictionary from "@/lib/dictionary.json"
+import { useWindowSize } from './../lib/useWindowSize';
+
+const {solutions, rest} = dictionary
 
 enum GameState {
     NotStarted,
@@ -20,6 +23,8 @@ const randomElement = (arr: string[]) => arr[Math.floor(Math.random() * arr.leng
 const DICTIONARY = solutions.concat(rest)
 
 export default function Wordle() {
+
+    const {height} = useWindowSize()
 
     const [SOLUTION, _] = useState(randomElement(solutions));
 
@@ -57,7 +62,7 @@ export default function Wordle() {
     } 
 
     return (
-        <div className="bg-slate-100 h-screen flex flex-col items-center gap-4 py-2">
+        <div className="bg-slate-100 flex flex-col items-center gap-4 py-2" style={{height: `${height}px`}}>
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
