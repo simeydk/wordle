@@ -26,14 +26,14 @@ export default function Wordle() {
 
     const {height} = useWindowSize()
 
-    const [SOLUTION, _] = useState(randomElement(solutions));
+    const [solution, setSolution] = useState(randomElement(solutions));
 
     const [draft, setDraft] = useState('')
     const [guesses, setGuesses] = useState<Guess[]>([])
     const numBlankRows = 6 - guesses.length - 1
     
     const addGuess = (word: string) => {
-        setGuesses(oldGuesses => [...oldGuesses, {word, result: wordle.assess(word, SOLUTION).join('')}])
+        setGuesses(oldGuesses => [...oldGuesses, {word, result: wordle.assess(word, solution).join('')}])
     }
 
     const onSubmit = () => {
@@ -61,6 +61,13 @@ export default function Wordle() {
         gameState = GameState.NotStarted
     } 
 
+    const resetGame = () => {
+        // setSolution(randomElement(DICTIONARY))
+        // setGuesses([])
+        setSolution('turbo')
+        setGuesses([{word: 'rates', result: '10000'}, {word: 'pinky', result: '00200'}, {word: 'cough', result:'01102'}])
+    }
+
     return (
         <div className="bg-slate-100 flex flex-col items-center gap-4 py-2" style={{height: `${height}px`}}>
             <Head>
@@ -75,7 +82,7 @@ export default function Wordle() {
                     rel="stylesheet"
                 />
             </Head>
-            <h1 style={{fontFamily: 'Bangers'}} className="text-3xl p-2 transform -skew-y-3 bg-gradient-to-tr from-lime-600 to-green-700 text-transparent bg-clip-text">
+            <h1 style={{fontFamily: 'Bangers'}} className="text-3xl p-2 transform -skew-y-3 bg-gradient-to-tr from-lime-600 to-green-700 text-transparent bg-clip-text" onDoubleClick={resetGame}>
                 Not Wordle
             </h1>
             <div className="flex grow w-full max-w-xs">
