@@ -67,7 +67,7 @@ export function Keyboard(props: {value: string, setValue: React.Dispatch<React.S
     rows[1] = [<div className="col-span-1" key="space1"></div>, ...rows[1], <div className="col-span-1" key="space2"></div>];
     rows[2] = [<BackSpaceKey key="bs" onClick={() => setValue(x => x.slice(0,-1))} isDown={isDown['backspace']} />, ...rows[2], <EnterKey key="enter" isDown={isDown['enter']} onClick={props.onSubmit} />];
     const font = "IBM Plex Mono"
-    return (<form onSubmit={e => e.preventDefault()} className="grid grid-cols-[repeat(20,minmax(0,1fr))] gap-1 items-center w-full max-w-lg px-2 font-medium" style={{fontFamily: font}} onKeyUp={onKeyUp}>
+    return (<form onSubmit={e => e.preventDefault()} className="grid grid-cols-[repeat(20,minmax(0,1fr))] gap-1 items-center w-full max-w-2xl px-2 font-medium" style={{fontFamily: font}} onKeyUp={onKeyUp}>
         <Head>
         <link
                     href={`https://fonts.googleapis.com/css2?family=${font}&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ`}
@@ -81,8 +81,11 @@ export function Keyboard(props: {value: string, setValue: React.Dispatch<React.S
 
 }
 
-const BackSpaceKey = ({onClick, isDown}): JSX.Element => <button className={"bg-red-200 text-red-700 h-12 transition duration-100 col-span-3 rounded rounded-b-md flex items-center justify-center p-0.5 hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
-const EnterKey = ({onClick, isDown}): JSX.Element => <button className={"bg-emerald-200 text-emerald-700 h-12 transition duration-100 col-span-3 rounded rounded-b-md flex items-center justify-center p-0.5  hover:scale-105 active:scale-95 " + (isDown ? "scale-75" : "")} name="enter" type="submit" onClick={onClick}>{<ArrowRightIcon className="h-6 w-6"  />}</button>;
+
+const buttonStyle = { boxShadow: "0 2px 2px -1px #0006" }
+const buttonClass = "h-14 rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex "
+const BackSpaceKey = ({onClick, isDown}): JSX.Element => <button style={buttonStyle} className={"bg-red-200 text-red-700 col-span-3 items-center justify-center " + buttonClass + (isDown ? "scale-75" : "")} name="backspace" onClick={onClick} type="button">{<BackspaceIcon className="h-6 w-6"/>}</button>;
+const EnterKey = ({onClick, isDown}): JSX.Element => <button style={buttonStyle} className={"bg-emerald-200 text-emerald-700 col-span-3 items-center justify-center " + buttonClass + (isDown ? "scale-75" : "")} name="enter" type="submit" onClick={onClick}>{<ArrowRightIcon className="h-6 w-6"  />}</button>;
 
 function Key({ char, onClick, isDown = false, state = wordle.LetterState.empty }: { char: string; onClick: (e: React.MouseEvent) => {}; isDown: boolean; state?: wordle.LetterState} ): JSX.Element {
     const stateClasses = {
@@ -92,5 +95,5 @@ function Key({ char, onClick, isDown = false, state = wordle.LetterState.empty }
         [wordle.LetterState.exact]: 'bg-lime-600 text-white',
     };
     const bg = state !== undefined ? stateClasses[state] || 'bg-slate-300' : 'bg-slate-300';
-    return <button className={bg + " h-12 col-span-2 rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex " + (isDown ? "scale-75" : "")} name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>
+    return <button style={buttonStyle} className={bg + " col-span-2 " + buttonClass + (isDown ? "scale-75" : "")} name={char} onClick={onClick} type="button">{char.toUpperCase()}</button>
 }
