@@ -107,14 +107,14 @@ function BoardRow({word = '', result = ''}) {
 
 function BoardBlock({char = '', state = wordle.LetterState.empty} : {char: string, state: wordle.LetterState}) {
     const stateClasses = {
-        [wordle.LetterState.empty]: 'bg-white border-2 border-slate-300',
+        [wordle.LetterState.empty]: 'bg-white  outline-slate-400',
         [wordle.LetterState.miss]: 'bg-slate-500 text-white',
         [wordle.LetterState.present]: 'bg-amber-500 text-white',
         [wordle.LetterState.exact]: 'bg-lime-600 text-white',
     };
-    const bg = char == ' ' ? 'bg-white' : stateClasses[state] || 'bg-pink-500 border border-pink-400';
-    return <div className={`${bg} rounded flex items-center justify-center w-full shadow `}>
-        <h1 className="text-2xl font-medium">{char.toUpperCase()}</h1>
+    const bg = char == ' ' ? 'bg-slate-200' : stateClasses[state] || 'bg-pink-500 border border-pink-400';
+    return <div className={`${bg} rounded flex items-center justify-center w-full shadow-[inset_0px_2px_5px_0px_#0004,_inset_-2px_-2px_3px_-1px_#FFF5]` }>
+        <h1 className="text-2xl font-medium" >{char.toUpperCase()}</h1>
     </div>;
 }
     
