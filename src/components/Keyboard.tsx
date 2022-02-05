@@ -105,7 +105,7 @@ export function Keyboard(props: {
     return (
         <form
             onSubmit={(e) => e.preventDefault()}
-            className="grid grid-cols-[repeat(20,minmax(0,1fr))] gap-1 items-center w-full max-w-2xl px-2 font-medium"
+            className="grid grid-cols-[repeat(20,minmax(0,1fr))] gap-1 items-center w-full max-w-[52rem] px-2 font-medium"
             style={{ fontFamily: font }}
             onKeyUp={onKeyUp}
         >
@@ -129,12 +129,12 @@ export function Keyboard(props: {
 
 const buttonStyle = { boxShadow: "0 2px 2px -1px #0006" };
 const buttonClass =
-    "h-14 rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex ";
+    "h-[8vh] min-h-[3.5rem]  rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex ";
 const BackSpaceKey = ({ onClick, isDown }): JSX.Element => (
     <button
         style={buttonStyle}
         className={
-            "bg-red-200 text-red-700 col-span-3 items-center justify-center " +
+            " bg-red-200 text-red-700 col-span-3 items-center justify-center " +
             buttonClass +
             (isDown ? "scale-75" : "")
         }
