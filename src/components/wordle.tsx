@@ -109,8 +109,8 @@ export default function Wordle() {
 
 function Header(resetGame: () => void) {
     return <header className="relative border-b-2 border-slate-400 w-full text-center max-w-sm pt-1 pb-2">
-        <span style={{ fontFamily: 'Bangers' }} className="absolute -translate-x-14 text-4xl transform -skew-y-3 text-lime-600" onDoubleClick={resetGame}>
-            <span className="text-lime-700">N</span>
+        <span style={{ fontFamily: 'Bangers' }} className="absolute -translate-x-14 text-4xl transform -skew-y-3 text-amber-500" onDoubleClick={resetGame}>
+            <span className="">N</span>
             <span className="inline-block transform translate-y-1 text-amber-500">o</span>
             <span className="inline-block transform -translate-y-0.5">t</span>
         </span>
