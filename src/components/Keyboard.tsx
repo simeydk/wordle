@@ -129,7 +129,7 @@ export function Keyboard(props: {
 
 const buttonStyle = { boxShadow: "0 2px 2px -1px #0006" };
 const buttonClass =
-    "h-[8vh] min-h-[3.5rem]  rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex ";
+    "h-[8vh] min-h-[3.5rem] text-base md:text-[3vh] rounded rounded-b-md font-medium transition duration-100 hover:scale-105 active:scale-95  px-2 py-1 flex ";
 const BackSpaceKey = ({ onClick, isDown }): JSX.Element => (
     <button
         style={buttonStyle}
@@ -142,7 +142,7 @@ const BackSpaceKey = ({ onClick, isDown }): JSX.Element => (
         onClick={onClick}
         type="button"
     >
-        {<BackspaceIcon className="h-6 w-6" />}
+        {<BackspaceIcon className="h-4 md:h-[3.5vh]" />}
     </button>
 );
 const EnterKey = ({ onClick, isDown }): JSX.Element => (
@@ -157,7 +157,7 @@ const EnterKey = ({ onClick, isDown }): JSX.Element => (
         type="submit"
         onClick={onClick}
     >
-        {<ArrowRightIcon className="h-6 w-6" />}
+        {<ArrowRightIcon className="h-4 md:h-[3.5vh]" />}
     </button>
 );
 
