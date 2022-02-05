@@ -1,12 +1,20 @@
 import { AnimatePresence, motion } from "framer-motion";
 import * as wordle from "../lib/wordle";
 
+const variants = {
+    normal: {y: 0},
+    up: {y: -70},
+    down: {y: 70},
+}
+
 export function BoardBlock({
     char = "",
     state = wordle.LetterState.empty,
+    index = 0,
 }: {
     char: string;
     state: wordle.LetterState;
+    index: number;
 }) {
     const stateClasses = {
         [wordle.LetterState.empty]: "bg-white  outline-slate-400",
@@ -26,10 +34,11 @@ export function BoardBlock({
             <AnimatePresence>
 
             {char !== "_" && char !== " " && <motion.div
-                animate={{y:state < 0 ? 0 : 70}}
-                initial={{y:-70}}
-                // exit={{y:10, opacity: 0.3}}
-                transition={{duration: 0.2, ease: "easeInOut"}}
+                variants={variants}
+                animate={state >= 0 ? "up" : "normal"}
+                initial={state >= 0 ? "normal" : "up"}
+                exit={"up"}
+                transition={{duration: 0.2, ease: "easeInOut", delay:state >=0 ? 0.025 * index : 0}}
                 className={`absolute inset-0 bg-white flex items-center justify-center`}
                 >
                 <h1 className={`text-2xl ${blink}`}>{char.toUpperCase()}</h1>
@@ -37,7 +46,7 @@ export function BoardBlock({
             {state >= 0 && <motion.div
                 animate={{y:0}}
                 initial={{y:-70}}
-                transition={{duration: 0.2, ease: "easeInOut", delay: 0.7}}
+                transition={{duration: 0.2, ease: "easeInOut", delay: 0.7 + index * 0.3}}
                 className={`absolute inset-0 ${bg} flex items-center justify-center`}
                 >
                 <h1 className={`text-2xl ${blink}`}>{char.toUpperCase()}</h1>

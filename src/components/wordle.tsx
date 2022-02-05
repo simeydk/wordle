@@ -142,7 +142,7 @@ function BoardRow({word = '', result = ''}) {
     const results = result.split('').map(x => parseInt(x)) as wordle.LetterState[]
     results.push( ...Array.from({length: 5 - results.length}).map(x => wordle.LetterState.empty))
     return <>
-        {word.split('').map((char, index) => <BoardBlock key={index} char={char} state={results[index]} />)} 
+        {word.split('').map((char, index) => <BoardBlock key={index} char={char} state={results[index]} index={index} />)} 
     </>;
 }
 
