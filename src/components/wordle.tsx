@@ -155,7 +155,7 @@ function BoardBlock({char = '', state = wordle.LetterState.empty} : {char: strin
 
 function Modal({onClick=()=>{alert('Play Again!')}, win=true}) {
     return (
-        <div className="fixed inset-0 z-50 bg-slate-600/30 flex justify-center items-center backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 bg-slate-600/30 flex justify-center items-center backdrop-blur-[2px]">
             <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-sm m-4">
                 <h2 className="text-3xl py-4">
                     {win ? "You Won!" : "Better Luck next time"}
