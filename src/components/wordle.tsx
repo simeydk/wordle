@@ -24,6 +24,9 @@ const DICTIONARY = solutions.concat(rest)
 
 export default function Wordle() {
 
+    const FONT = 'Segoe UI'
+    const FONTWEIGHT = 500
+
     const {height} = useWindowSize()
 
     const [solution, setSolution] = useState(randomElement(solutions));
@@ -81,13 +84,17 @@ export default function Wordle() {
                     href="https://fonts.googleapis.com/css2?family=Bangers&text=NotWordle"
                     rel="stylesheet"
                 />
+                                <link
+                    href={`https://fonts.googleapis.com/css2?family=${FONT}:wght@${FONTWEIGHT}&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ `}
+                    rel="stylesheet"
+                />
             </Head>
             <h1 style={{fontFamily: 'Bangers'}} className="text-3xl p-2 transform -skew-y-3 bg-gradient-to-tr from-lime-600 to-green-700 text-transparent bg-clip-text" onDoubleClick={resetGame}>
                 Not Wordle
             </h1>
             <div className="flex grow w-full max-w-xs">
                 {/* <div className="outline outline-red-500 w-full"></div> */}
-                <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96">
+                <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96" style={{fontFamily: `'${FONT}', 'Segoe UI'`, fontWeight:FONTWEIGHT}}>
                     {/* {Array.from({length:20}).map(() => <div className="bg-white rounded shadow"></div>)} */}
                     {guesses.map(({word, result}, i) => <BoardRow key={i} word={word} result={result} />)}
                     <BoardRow word={draft + "_"} key={guesses.length} />
@@ -120,8 +127,9 @@ function BoardBlock({char = '', state = wordle.LetterState.empty} : {char: strin
         [wordle.LetterState.exact]: 'bg-lime-600 text-white',
     };
     const bg = char == ' ' ? 'bg-slate-200' : stateClasses[state] || 'bg-pink-500 border border-pink-400';
+    const blink = char == '_' ? 'blink' : ''
     return <div className={`${bg} rounded flex items-center justify-center w-full shadow-[inset_0px_2px_5px_0px_#0004,_inset_-2px_-2px_3px_-1px_#FFF5]` }>
-        <h1 className="text-2xl font-medium" >{char.toUpperCase()}</h1>
+        <h1 className={`text-2xl ${blink}`} >{char.toUpperCase()}</h1>
     </div>;
 }
     
