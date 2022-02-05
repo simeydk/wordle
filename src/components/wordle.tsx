@@ -30,10 +30,10 @@ export default function Wordle() {
     const {height} = useWindowSize()
 
     const [solution, setSolution] = useState(randomElement(solutions));
+    const [cheat, setCheat] = useState<boolean>(false);
 
     const [draft, setDraft] = useState('')
     const [guesses, setGuesses] = useState<Guess[]>([])
-    const numBlankRows = 6 - guesses.length - 1
     
     const addGuess = (word: string) => {
         setGuesses(oldGuesses => [...oldGuesses, {word, result: wordle.assess(word, solution).join('')}])
@@ -41,6 +41,7 @@ export default function Wordle() {
 
     const onSubmit = () => {
         if (draft.length != 5) return
+        if (draft === 'cheet') {setCheat(x => !x); setDraft(''); return}
         if (!DICTIONARY.includes(draft)) return
         addGuess(draft)
         setDraft('')
@@ -66,7 +67,10 @@ export default function Wordle() {
 
     const isDone = [GameState.Won, GameState.Lost].includes(gameState)
 
+    const numBlankRows = 6 - guesses.length - (isDone ? 0 : 1)
+
     const resetGame = () => {
+        setCheat(false)
         setSolution(randomElement(DICTIONARY))
         setGuesses([])
         // setSolution('turbo')
@@ -92,6 +96,7 @@ export default function Wordle() {
                 />
             </Head>
             {isDone ? <Modal onClick={resetGame} win={gameState === GameState.Won}/> : ''}
+            {cheat ? <div className="fixed top-1 mx-auto px-2 py-1 bg-black rounded text-white font-mono uppercase shadow z-40">{solution}</div> : ''}
             <Header onDoubleClick={resetGame} />
             <div  className="flex grow w-full max-w-xs items-center">
                 {/* <div className="outline outline-red-500 w-full"></div> */}
@@ -160,7 +165,7 @@ function Modal({onClick=()=>{alert('Play Again!')}, win=true}) {
                 <h2 className="text-3xl py-4">
                     {win ? "You Won!" : "Better Luck next time"}
                 </h2>
-                <button onClick={onClick} className=" ml-auto p-2 bg-lime-600 font-medium text-white px-4 rounded shadow">Play Again</button>
+                <button onClick={onClick}  className=" ml-auto p-2 bg-lime-600 font-medium text-white px-4 rounded shadow">Play Again</button>
             </div>
         </div>
 
