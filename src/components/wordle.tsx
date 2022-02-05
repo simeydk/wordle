@@ -89,8 +89,8 @@ export default function Wordle() {
                     rel="stylesheet"
                 />
             </Head>
-            {Header(resetGame)}
-            <div className="flex grow w-full max-w-xs">
+            <Header onDoubleClick={resetGame} />
+            <div  className="flex grow w-full max-w-xs">
                 {/* <div className="outline outline-red-500 w-full"></div> */}
                 <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96" style={{fontFamily: `'${FONT}', 'Segoe UI'`, fontWeight:FONTWEIGHT}}>
                     {/* {Array.from({length:20}).map(() => <div className="bg-white rounded shadow"></div>)} */}
@@ -107,9 +107,9 @@ export default function Wordle() {
 
 
 
-function Header(resetGame: () => void) {
-    return <header className="relative border-b-2 border-slate-400 w-full text-center max-w-sm pt-1 pb-2">
-        <span style={{ fontFamily: 'Bangers' }} className="absolute -translate-x-14 text-4xl transform -skew-y-3 text-amber-500" onDoubleClick={resetGame}>
+function Header(props) {
+    return <header className="relative border-b-2 border-slate-400 w-full text-center max-w-md pt-1 pb-2 " {...props} >
+        <span style={{ fontFamily: 'Bangers' }} className="absolute -translate-x-14 text-4xl transform -skew-y-3 text-amber-500" >
             <span className="">N</span>
             <span className="inline-block transform translate-y-1 text-amber-500">o</span>
             <span className="inline-block transform -translate-y-0.5">t</span>
