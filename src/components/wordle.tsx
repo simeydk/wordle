@@ -64,11 +64,13 @@ export default function Wordle() {
         gameState = GameState.NotStarted
     } 
 
+    const isDone = [GameState.Won, GameState.Lost].includes(gameState)
+
     const resetGame = () => {
-        // setSolution(randomElement(DICTIONARY))
-        // setGuesses([])
-        setSolution('turbo')
-        setGuesses([{word: 'rates', result: '10000'}, {word: 'pinky', result: '00200'}, {word: 'cough', result:'01102'}])
+        setSolution(randomElement(DICTIONARY))
+        setGuesses([])
+        // setSolution('turbo')
+        // setGuesses([{word: 'rates', result: '10000'}, {word: 'pinky', result: '00200'}, {word: 'cough', result:'01102'}])
     }
 
     return (
@@ -89,13 +91,14 @@ export default function Wordle() {
                     rel="stylesheet"
                 />
             </Head>
+            {isDone ? <Modal onClick={resetGame} win={gameState === GameState.Won}/> : ''}
             <Header onDoubleClick={resetGame} />
             <div  className="flex grow w-full max-w-xs items-center">
                 {/* <div className="outline outline-red-500 w-full"></div> */}
                 <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96 h-full" style={{fontFamily: `'${FONT}', 'Segoe UI'`, fontWeight:FONTWEIGHT}}>
                     {/* {Array.from({length:20}).map(() => <div className="bg-white rounded shadow"></div>)} */}
                     {guesses.map(({word, result}, i) => <BoardRow key={i} word={word} result={result} />)}
-                    <BoardRow word={draft + "_"} key={guesses.length} />
+                    {isDone ? '' : <BoardRow word={draft + "_"} key={guesses.length} />}
                     {Array.from({length: numBlankRows}).map((_, i) => <BoardRow key={i + guesses.length + 1} />)}
                 </div>
 
@@ -149,5 +152,18 @@ function BoardBlock({char = '', state = wordle.LetterState.empty} : {char: strin
         <h1 className={`text-2xl ${blink}`} >{char.toUpperCase()}</h1>
     </div>;
 }
-    
+
+function Modal({onClick=()=>{alert('Play Again!')}, win=true}) {
+    return (
+        <div className="fixed inset-0 z-50 bg-slate-600/30 flex justify-center items-center backdrop-blur-sm">
+            <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-sm m-4">
+                <h2 className="text-3xl py-4">
+                    {win ? "You Won!" : "Better Luck next time"}
+                </h2>
+                <button onClick={onClick} className=" ml-auto p-2 bg-lime-600 font-medium text-white px-4 rounded shadow">Play Again</button>
+            </div>
+        </div>
+
+    )
+}
 
