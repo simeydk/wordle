@@ -90,9 +90,9 @@ export default function Wordle() {
                 />
             </Head>
             <Header onDoubleClick={resetGame} />
-            <div  className="flex grow w-full max-w-xs">
+            <div  className="flex grow w-full max-w-xs items-center">
                 {/* <div className="outline outline-red-500 w-full"></div> */}
-                <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96" style={{fontFamily: `'${FONT}', 'Segoe UI'`, fontWeight:FONTWEIGHT}}>
+                <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96 h-full" style={{fontFamily: `'${FONT}', 'Segoe UI'`, fontWeight:FONTWEIGHT}}>
                     {/* {Array.from({length:20}).map(() => <div className="bg-white rounded shadow"></div>)} */}
                     {guesses.map(({word, result}, i) => <BoardRow key={i} word={word} result={result} />)}
                     <BoardRow word={draft + "_"} key={guesses.length} />
