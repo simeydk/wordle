@@ -89,9 +89,7 @@ export default function Wordle() {
                     rel="stylesheet"
                 />
             </Head>
-            <h1 style={{fontFamily: 'Bangers'}} className="text-3xl p-2 transform -skew-y-3 bg-gradient-to-tr from-lime-600 to-green-700 text-transparent bg-clip-text" onDoubleClick={resetGame}>
-                Not Wordle
-            </h1>
+            {Header(resetGame)}
             <div className="flex grow w-full max-w-xs">
                 {/* <div className="outline outline-red-500 w-full"></div> */}
                 <div className="grid grid-cols-5 grid-rows-6 gap-2 w-full max-h-96" style={{fontFamily: `'${FONT}', 'Segoe UI'`, fontWeight:FONTWEIGHT}}>
@@ -108,6 +106,25 @@ export default function Wordle() {
 }
 
 
+
+function Header(resetGame: () => void) {
+    return <header className="relative border-b-2 border-slate-400 w-full text-center max-w-sm pt-1 pb-2">
+        <span style={{ fontFamily: 'Bangers' }} className="absolute -translate-x-14 text-4xl transform -skew-y-3 text-lime-600" onDoubleClick={resetGame}>
+            <span className="text-lime-700">N</span>
+            <span className="inline-block transform translate-y-1 text-amber-500">o</span>
+            <span className="inline-block transform -translate-y-0.5">t</span>
+        </span>
+        <span className="inline-flex gap-0.5 font-medium text-xl">
+
+        <span className="h-8 aspect-square rounded-sm shadow-md transform bg-lime-600 text-white flex items-center justify-center -rotate-6 scale-105">W</span>
+        <span className="h-8 aspect-square rounded-sm shadow-md transform bg-slate-600 text-white flex items-center justify-center rotate-3">O</span>
+        <span className="h-8 aspect-square rounded-sm shadow-lg scale-105 transform border-slate-400 bg-amber-500 text-white flex items-center justify-center -rotate-6 -translate-y-1">R</span>
+        <span className="h-8 aspect-square rounded-sm shadow-md transform border-slate-400 bg-lime-600 text-white flex items-center justify-center rotate-3">D</span>
+        <span className="h-8 aspect-square rounded-sm shadow-md transform bg-slate-600 text-white flex items-center justify-center">L</span>
+        <span className="h-8 aspect-square rounded-sm shadow-md transform border-2 border-slate-400 bg-slate-50 rotate-6 translate-y-1 flex items-center justify-center">E</span>
+        </span>
+    </header>;
+}
 
 function BoardRow({word = '', result = ''}) {
     word = word + (word.length < 5 ? ' '.repeat(5 - word.length) : '');
