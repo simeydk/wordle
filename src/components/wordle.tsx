@@ -43,7 +43,7 @@ export default function Wordle() {
 
     const onSubmit = () => {
         if (draft.length != 5) return
-        if (draft === 'cheet') {setCheat(x => !x); setDraft(''); return}
+        if (draft === 'xyzzy') {setCheat(x => !x); setDraft(''); return}
         if (!DICTIONARY.includes(draft)) return
         addGuess(draft)
         setDraft('')
@@ -73,7 +73,7 @@ export default function Wordle() {
 
     const resetGame = () => {
         setCheat(false)
-        setSolution(randomElement(DICTIONARY))
+        setSolution(randomElement(solutions))
         setGuesses([])
         // setSolution('turbo')
         // setGuesses([{word: 'rates', result: '10000'}, {word: 'pinky', result: '00200'}, {word: 'cough', result:'01102'}])
