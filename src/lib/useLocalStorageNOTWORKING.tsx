@@ -2,6 +2,10 @@ import {useState} from 'react'
 
 const STORAGE = window ? window?.localStorage : undefined
 
+export function one() {
+  return 1
+}
+
 // Hook
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
     // State to store our value
