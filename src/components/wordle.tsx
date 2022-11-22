@@ -57,7 +57,8 @@ export default function Wordle() {
     } 
 
     return (
-        <div className="bg-slate-100 h-screen flex flex-col items-center gap-4 py-2">
+        <div className="bg-slate-100 h-screen">
+        <div className="bg-slate-100 max-h-screen flex flex-col items-center gap-4 py-2">
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
@@ -84,6 +85,7 @@ export default function Wordle() {
 
             </div>
             <Keyboard value={draft} setValue={setDraft} onSubmit={onSubmit} guessedLetters={guessedLetters} />
+        </div>
         </div>
     );
 }
